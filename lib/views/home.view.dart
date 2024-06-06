@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-final _bottomNavBarItems = [
-  "home_48.svg",
-  "play_48.svg",
-  "books_48.svg",
-  "read_48.svg"
-];
+import 'pages/case_studies.page.dart';
+import 'pages/concepts.page.dart';
+import 'pages/dashboard.page.dart';
+import 'pages/shorts.page.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -17,6 +14,22 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   int _selectedIndex = 0;
+
+  final _bottomNavBarItems = [
+    "home_48.svg",
+    "play_48.svg",
+    "books_48.svg",
+    "read_48.svg"
+  ];
+
+  final _pages = [
+    const DashboardPage(),
+    const ShortsPage(),
+    const CaseStudiesPage(),
+    const ConceptsPage(),
+  ];
+
+  final _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -70,11 +83,22 @@ class _HomeViewState extends State<HomeView> {
             ),
           ),
         ),
-        body: const Column(
+        body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Center(
-              child: Text("Home"),
+            Expanded(
+              child: PageView.builder(
+                onPageChanged: (value) {
+                  _selectedIndex = value;
+
+                  setState(() {});
+                },
+                controller: _pageController,
+                itemCount: _pages.length,
+                itemBuilder: (_, index) {
+                  return _pages[index];
+                },
+              ),
             ),
           ],
         ),
@@ -96,6 +120,7 @@ class _HomeViewState extends State<HomeView> {
                 InkWell(
                   onTap: () {
                     _selectedIndex = i;
+                    _pageController.jumpToPage(_selectedIndex);
                     setState(() {});
                   },
                   child: Container(
