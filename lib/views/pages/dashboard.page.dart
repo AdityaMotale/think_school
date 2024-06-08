@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class DashboardPage extends StatelessWidget {
@@ -13,6 +15,39 @@ class DashboardPage extends StatelessWidget {
     return Color(int.parse(buffer.toString(), radix: 16));
   }
 
+  final headingTextStyle = const TextStyle(
+    fontFamily: "Space Grotesk",
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+  );
+
+  ///
+  /// Function to calculate the length of the text
+  ///
+  double calculateTextWidth(String text) {
+    final textPainter = TextPainter(
+      text: TextSpan(text: text, style: headingTextStyle),
+      textDirection: TextDirection.ltr,
+    );
+
+    textPainter.layout(minWidth: 0, maxWidth: double.infinity);
+
+    return textPainter.size.width;
+  }
+
+  double calculateAspectRatio(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    // Assuming each item takes some padding and the grid spacing
+    double desiredItemWidth = (screenWidth / 2) - 60;
+
+    double desiredItemHeight = desiredItemWidth;
+
+    double aspectRatio = desiredItemWidth / desiredItemHeight;
+
+    return aspectRatio;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,6 +58,7 @@ class DashboardPage extends StatelessWidget {
             vertical: 24,
           ),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Featured Case Study
@@ -30,35 +66,36 @@ class DashboardPage extends StatelessWidget {
                 alignment: Alignment.bottomLeft,
                 children: [
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.53,
-                    height: 8,
+                    width: calculateTextWidth("Featured Case Study"),
+                    height: 6,
                     decoration: const BoxDecoration(
                       color: Color(0xFF79F5C5),
                     ),
                   ),
-                  const Text(
+                  Text(
                     "Featured Case Study —",
-                    style: TextStyle(
-                      fontFamily: "Space Grotesk",
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: headingTextStyle,
                   ),
                 ],
               ),
+
               const SizedBox(height: 24),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Image.network(
-                  "https://adityamotale.github.io/think_school_release/public/images/c_01.png",
-                  loadingBuilder: (_, child, progress) {
-                    if (progress != null) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                    return child;
-                  },
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.network(
+                    "https://adityamotale.github.io/think_school_release/public/images/c_01.png",
+                    fit: BoxFit.cover,
+                    loadingBuilder: (_, child, progress) {
+                      if (progress != null) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return child;
+                    },
+                  ),
                 ),
               ),
               const SizedBox(height: 32),
@@ -68,8 +105,8 @@ class DashboardPage extends StatelessWidget {
                 alignment: Alignment.bottomLeft,
                 children: [
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.36,
-                    height: 8,
+                    width: calculateTextWidth("Today For You"),
+                    height: 6,
                     decoration: const BoxDecoration(
                       color: Color(0xFFB9BBFE),
                     ),
@@ -97,13 +134,14 @@ class DashboardPage extends StatelessWidget {
 
               // Shorts
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.36,
+                height: min(MediaQuery.of(context).size.height * 0.4, 280),
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: kShortVideos.length,
+                  shrinkWrap: true,
                   itemBuilder: (context, index) {
                     return Container(
-                      width: MediaQuery.of(context).size.width * 0.3,
+                      width: min(MediaQuery.of(context).size.width * 0.3, 128),
                       margin: const EdgeInsets.only(right: 16),
                       child: Column(
                         children: [
@@ -140,15 +178,15 @@ class DashboardPage extends StatelessWidget {
                   },
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 8),
 
               // Concepts
               Stack(
                 alignment: Alignment.bottomLeft,
                 children: [
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.45,
-                    height: 8,
+                    width: calculateTextWidth("Explore Concepts"),
+                    height: 6,
                     decoration: const BoxDecoration(
                       color: Color(0xFFF7E277),
                     ),
@@ -166,10 +204,12 @@ class DashboardPage extends StatelessWidget {
               const SizedBox(height: 24),
 
               GridView.count(
-                shrinkWrap: true,
                 crossAxisCount: 2,
                 mainAxisSpacing: 12,
                 crossAxisSpacing: 12,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                childAspectRatio: calculateAspectRatio(context),
                 children: [
                   for (int i = 0; i < kConcepts.length; i++)
                     Container(
@@ -209,6 +249,9 @@ class DashboardPage extends StatelessWidget {
                               fontFamily: "Space Grotesk",
                               fontSize: 12,
                             ),
+                            maxLines:
+                                MediaQuery.of(context).size.width < 400 ? 1 : 2,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ],
                       ),

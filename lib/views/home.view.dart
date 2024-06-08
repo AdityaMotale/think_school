@@ -90,6 +90,7 @@ class _HomeViewState extends State<HomeView> {
           children: [
             Expanded(
               child: PageView.builder(
+                physics: const NeverScrollableScrollPhysics(),
                 onPageChanged: (value) {
                   _selectedIndex = value;
 
