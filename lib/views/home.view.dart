@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'pages/case_studies.page.dart';
@@ -36,7 +38,7 @@ class _HomeViewState extends State<HomeView> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          toolbarHeight: MediaQuery.of(context).size.height * 0.09,
+          toolbarHeight: min(MediaQuery.of(context).size.height * 0.09, 72),
           title: const Text(
             "ThinkSchool",
             style: TextStyle(
