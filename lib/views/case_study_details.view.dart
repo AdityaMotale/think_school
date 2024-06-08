@@ -37,6 +37,7 @@ class _CaseStudyViewState extends State<CaseStudyView> {
       child: Scaffold(
         body: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Stack(
                 alignment: AlignmentDirectional.topEnd,
