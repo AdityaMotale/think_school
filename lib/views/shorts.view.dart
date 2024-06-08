@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:video_player/video_player.dart';
@@ -30,11 +31,13 @@ class _ShortsViewState extends State<ShortsView> {
       shortData = kShortVideos[widget.shortIndex];
     }
 
-    videoPlayerController = VideoPlayerController.networkUrl(
-      Uri.parse(shortData["video"]!),
-    )
-      ..initialize()
-      ..play();
+    if (!kIsWeb) {
+      videoPlayerController = VideoPlayerController.networkUrl(
+        Uri.parse(shortData["video"]!),
+      )
+        ..initialize()
+        ..play();
+    }
   }
 
   @override
@@ -55,6 +58,8 @@ class _ShortsViewState extends State<ShortsView> {
           onPageChanged: (value) {
             shortData = kShortVideos[value];
 
+            if (kIsWeb) return;
+
             videoPlayerController = VideoPlayerController.networkUrl(
               Uri.parse(shortData["video"]!),
             )
@@ -69,11 +74,50 @@ class _ShortsViewState extends State<ShortsView> {
               height: MediaQuery.of(context).size.height,
               child: Stack(
                 children: [
-                  AspectRatio(
-                    aspectRatio: MediaQuery.of(context).size.width /
-                        MediaQuery.of(context).size.height,
-                    child: VideoPlayer(videoPlayerController),
-                  ),
+                  // If [kIsWeb] then show the text saying the video player
+                  // is not supported on the web
+                  if (kIsWeb)
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      child: Stack(
+                        alignment: AlignmentDirectional.center,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 32),
+                            child: Text(
+                              "Unfortunately the video player is not supported on the web. To experience the app without any limitations, please access the app through Android or IOS devices!",
+                              style: TextStyle(
+                                fontFamily: "Space Grotesk",
+                                fontWeight: FontWeight.w600,
+                                fontSize: 20,
+                                color: Colors.white,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          Image.network(
+                            shortData["img"]!,
+                            fit: BoxFit.fill,
+                            width: MediaQuery.of(context).size.width,
+                            loadingBuilder: (_, child, progress) {
+                              if (progress != null) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                              return child;
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  if (!kIsWeb)
+                    AspectRatio(
+                      aspectRatio: MediaQuery.of(context).size.width /
+                          MediaQuery.of(context).size.height,
+                      child: VideoPlayer(videoPlayerController),
+                    ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 20,
