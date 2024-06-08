@@ -2,6 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import '../../data/concepts.data.dart';
+import '../../data/shorts.data.dart';
+
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
 
@@ -265,73 +268,3 @@ class DashboardPage extends StatelessWidget {
     );
   }
 }
-
-const List<Map<String, String>> kShortVideos = [
-  {
-    "img":
-        "https://adityamotale.github.io/think_school_release/public/images/s_02.png",
-    "video":
-        "https://adityamotale.github.io/think_school_release/public/videos/s_01.mp4",
-    "title": "3 Things that helped OYO grow! Ft. Rites Agarawal",
-    "dateTime": "May 05, 2024",
-    "category": "Business",
-    "likes": "1k",
-    "shares": "800",
-    "saved": "250",
-  },
-  {
-    "img":
-        "https://adityamotale.github.io/think_school_release/public/images/s_01.png",
-    "video":
-        "https://adityamotale.github.io/think_school_release/public/videos/s_02.mp4",
-    "title": "What do you think about this argument?",
-    "dateTime": "April 25, 2024",
-    "category": "Politics",
-    "likes": "1k",
-    "shares": "1.2k",
-    "saved": "900",
-  },
-  {
-    "img":
-        "https://adityamotale.github.io/think_school_release/public/images/s_03.png",
-    "video":
-        "https://adityamotale.github.io/think_school_release/public/videos/s_03.mp4",
-    "title": "Kerala’s Economic Disaster!",
-    "dateTime": "April 20, 2024",
-    "category": "Politics",
-    "likes": "5k",
-    "shares": "750",
-    "saved": "2K",
-  }
-];
-
-const List<Map<String, String>> kConcepts = [
-  {
-    "icon": "🧠",
-    "title": "Dunning–Kruger effect",
-    "color": "FCEFC7",
-    "desc": "Overestimating ability; lacking self-awareness",
-    "body": "",
-  },
-  {
-    "icon": "✨",
-    "title": "Assembly bonus effect",
-    "color": "C9F6E6",
-    "desc": "Enhance performance in group settings",
-    "body": "",
-  },
-  {
-    "icon": "🌟",
-    "title": "Lake Wobegon effect",
-    "color": "E9E1FD",
-    "desc": "Everyone believes they're above average",
-    "body": "",
-  },
-  {
-    "icon": "🛞",
-    "title": "The wagon-wheel effect",
-    "color": "E5F3FD",
-    "desc": "Illusion of wheels spinning backwards",
-    "body": "",
-  },
-];
