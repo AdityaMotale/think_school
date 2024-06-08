@@ -38,7 +38,7 @@ You have the potential to change the future of your country as an individual. De
   },
   {
     "img":
-        "https://adityamotale.github.io/think_school_release/public/images/c_03.png",
+        "https://adityamotale.github.io/think_school_release/public/images/c_02.png",
     "title": "‘Buy Now Pay Later’ Industry",
     "dateTime": "May 10, 2024",
     "category": "Governance",
