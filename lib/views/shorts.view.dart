@@ -83,19 +83,6 @@ class _ShortsViewState extends State<ShortsView> {
                       child: Stack(
                         alignment: AlignmentDirectional.center,
                         children: [
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 32),
-                            child: Text(
-                              "Unfortunately the video player is not supported on the web. To experience the app without any limitations, please access the app through Android or IOS devices!",
-                              style: TextStyle(
-                                fontFamily: "Space Grotesk",
-                                fontWeight: FontWeight.w600,
-                                fontSize: 20,
-                                color: Colors.white,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
                           Image.network(
                             shortData["img"]!,
                             fit: BoxFit.fill,
@@ -108,6 +95,19 @@ class _ShortsViewState extends State<ShortsView> {
                               }
                               return child;
                             },
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 32),
+                            child: Text(
+                              "Unfortunately the video player is not supported on the web. To experience the app without any limitations, please access the app through Android or IOS devices!",
+                              style: TextStyle(
+                                fontFamily: "Space Grotesk",
+                                fontWeight: FontWeight.w600,
+                                fontSize: 20,
+                                color: Colors.white,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                         ],
                       ),
