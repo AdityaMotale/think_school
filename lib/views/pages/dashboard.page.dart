@@ -1,9 +1,12 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import '../../data/case_studies.data.dart';
+import '../case_study_details.view.dart';
 
 import '../../data/concepts.data.dart';
 import '../../data/shorts.data.dart';
+import '../concept_details.view.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
@@ -83,21 +86,36 @@ class DashboardPage extends StatelessWidget {
               ),
 
               const SizedBox(height: 24),
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image.network(
-                    "https://adityamotale.github.io/think_school_release/public/images/c_01.png",
-                    fit: BoxFit.cover,
-                    loadingBuilder: (_, child, progress) {
-                      if (progress != null) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      return child;
-                    },
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => CaseStudyView(
+                        img: kCaseStudies[0]["img"]!,
+                        title: kCaseStudies[0]["title"]!,
+                        dateTime: kCaseStudies[0]["dateTime"]!,
+                        category: kCaseStudies[0]["category"]!,
+                        body: kCaseStudies[0]["body"]!,
+                      ),
+                    ),
+                  );
+                },
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.network(
+                      "https://adityamotale.github.io/think_school_release/public/images/c_01.png",
+                      fit: BoxFit.cover,
+                      loadingBuilder: (_, child, progress) {
+                        if (progress != null) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        return child;
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -215,53 +233,67 @@ class DashboardPage extends StatelessWidget {
                 childAspectRatio: calculateAspectRatio(context),
                 children: [
                   for (int i = 0; i < kConcepts.length; i++)
-                    Container(
-                      padding: const EdgeInsets.all(11.5),
-                      decoration: BoxDecoration(
-                        color: hexToColor(kConcepts[i]["color"]!),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(10),
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => ConceptView(
+                              bgColor: hexToColor(kConcepts[i]["color"]!),
+                              title: kConcepts[i]["title"]!,
+                              icon: kConcepts[i]["icon"]!,
+                              body: kConcepts[i]["body"]!,
                             ),
-                            child: Text(
-                              kConcepts[i]['icon']!,
+                          ),
+                        );
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(11.5),
+                        decoration: BoxDecoration(
+                          color: hexToColor(kConcepts[i]["color"]!),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.white,
+                              ),
+                              child: Text(
+                                kConcepts[i]['icon']!,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            Text(
+                              kConcepts[i]["title"]!,
                               style: const TextStyle(
+                                fontFamily: "Dm Serif Display",
                                 fontSize: 16,
                               ),
                             ),
-                          ),
-                          const SizedBox(height: 12),
-                          Text(
-                            kConcepts[i]["title"]!,
-                            style: const TextStyle(
-                              fontFamily: "Dm Serif Display",
-                              fontSize: 16,
+                            const SizedBox(height: 12),
+                            Text(
+                              kConcepts[i]["desc"]!,
+                              style: const TextStyle(
+                                fontFamily: "Space Grotesk",
+                                fontSize: 12,
+                              ),
+                              maxLines: MediaQuery.of(context).size.width < 400
+                                  ? 1
+                                  : 2,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                          ),
-                          const SizedBox(height: 12),
-                          Text(
-                            kConcepts[i]["desc"]!,
-                            style: const TextStyle(
-                              fontFamily: "Space Grotesk",
-                              fontSize: 12,
-                            ),
-                            maxLines:
-                                MediaQuery.of(context).size.width < 400 ? 1 : 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                 ],
               ),
-           
             ],
           ),
         ),
