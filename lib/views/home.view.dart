@@ -2,10 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:think_school/views/shorts.view.dart';
 import 'pages/case_studies.page.dart';
 import 'pages/concepts.page.dart';
 import 'pages/dashboard.page.dart';
-import 'pages/shorts.page.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -26,7 +26,7 @@ class _HomeViewState extends State<HomeView> {
 
   final _pages = [
     const DashboardPage(),
-    const ShortsPage(),
+    const SizedBox(),
     const CaseStudiesPage(),
     const ConceptsPage(),
   ];
@@ -91,11 +91,6 @@ class _HomeViewState extends State<HomeView> {
             Expanded(
               child: PageView.builder(
                 physics: const NeverScrollableScrollPhysics(),
-                onPageChanged: (value) {
-                  _selectedIndex = value;
-
-                  setState(() {});
-                },
                 controller: _pageController,
                 itemCount: _pages.length,
                 itemBuilder: (_, index) {
@@ -122,7 +117,19 @@ class _HomeViewState extends State<HomeView> {
               for (int i = 0; i < _bottomNavBarItems.length; i++)
                 InkWell(
                   onTap: () {
+                    // navigate to shorts page
+                    if (i == 1) {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const ShortsView(shortIndex: 0),
+                        ),
+                      );
+
+                      return; // close the function to avoid unnecessary build
+                    }
+
                     _selectedIndex = i;
+
                     _pageController.jumpToPage(_selectedIndex);
                     setState(() {});
                   },

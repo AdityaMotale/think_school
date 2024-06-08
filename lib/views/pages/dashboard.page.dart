@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:think_school/views/shorts.view.dart';
 import '../../data/case_studies.data.dart';
 import '../case_study_details.view.dart';
 
@@ -86,6 +87,7 @@ class DashboardPage extends StatelessWidget {
               ),
 
               const SizedBox(height: 24),
+
               GestureDetector(
                 onTap: () {
                   Navigator.of(context).push(
@@ -119,6 +121,7 @@ class DashboardPage extends StatelessWidget {
                   ),
                 ),
               ),
+
               const SizedBox(height: 32),
 
               // Today For You
@@ -142,7 +145,9 @@ class DashboardPage extends StatelessWidget {
                   ),
                 ],
               ),
+
               const SizedBox(height: 12),
+
               const Text(
                 "Explore various concepts with short form videos",
                 style: TextStyle(
@@ -151,6 +156,7 @@ class DashboardPage extends StatelessWidget {
                   fontWeight: FontWeight.w300,
                 ),
               ),
+
               const SizedBox(height: 24),
 
               // Shorts
@@ -161,44 +167,57 @@ class DashboardPage extends StatelessWidget {
                   itemCount: kShortVideos.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    return Container(
-                      width: min(MediaQuery.of(context).size.width * 0.3, 128),
-                      margin: const EdgeInsets.only(right: 16),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
-                              child: Image.network(
-                                kShortVideos[index]["img"]!,
-                                loadingBuilder: (_, child, progress) {
-                                  if (progress != null) {
-                                    return const Center(
-                                      child: CircularProgressIndicator(),
-                                    );
-                                  }
-                                  return child;
-                                },
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => ShortsView(shortIndex: index),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        width: min(
+                          MediaQuery.of(context).size.width * 0.3,
+                          128,
+                        ),
+                        margin: const EdgeInsets.only(right: 16),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: Image.network(
+                                  kShortVideos[index]["img"]!,
+                                  loadingBuilder: (_, child, progress) {
+                                    if (progress != null) {
+                                      return const Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    }
+                                    return child;
+                                  },
+                                ),
                               ),
                             ),
-                          ),
-                          const SizedBox(height: 12),
-                          Text(
-                            kShortVideos[index]["title"]!,
-                            style: const TextStyle(
-                              fontFamily: "Space Grotesk",
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              overflow: TextOverflow.ellipsis,
+                            const SizedBox(height: 12),
+                            Text(
+                              kShortVideos[index]["title"]!,
+                              style: const TextStyle(
+                                fontFamily: "Space Grotesk",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              maxLines: 2,
                             ),
-                            maxLines: 2,
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     );
                   },
                 ),
               ),
+
               const SizedBox(height: 8),
 
               // Concepts
@@ -222,6 +241,7 @@ class DashboardPage extends StatelessWidget {
                   ),
                 ],
               ),
+
               const SizedBox(height: 24),
 
               GridView.count(
