@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:think_school/data/case_studies.data.dart';
+import 'package:think_school/views/case_study_details.view.dart';
 
 class CaseStudiesPage extends StatelessWidget {
   const CaseStudiesPage({super.key});
@@ -54,71 +55,86 @@ class CaseStudiesPage extends StatelessWidget {
               child: ListView.builder(
                 itemCount: kCaseStudies.length,
                 itemBuilder: (context, index) {
-                  return Container(
-                    margin: const EdgeInsets.symmetric(vertical: 12),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: Image.network(
-                              kCaseStudies[index]["img"]!,
-                              fit: BoxFit.cover,
-                              loadingBuilder: (_, child, progress) {
-                                if (progress != null) {
-                                  return const Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                }
-                                return child;
-                              },
-                            ),
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => CaseStudyView(
+                            img: kCaseStudies[index]["img"]!,
+                            title: kCaseStudies[index]["title"]!,
+                            dateTime: kCaseStudies[index]["dateTime"]!,
+                            category: kCaseStudies[index]["category"]!,
+                            body: kCaseStudies[index]["body"]!,
                           ),
                         ),
-                        const SizedBox(height: 12),
-                        Text(
-                          kCaseStudies[index]["title"]!,
-                          style: const TextStyle(
-                            fontFamily: "Space Grotesk",
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
+                      );
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(vertical: 12),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Image.network(
+                                kCaseStudies[index]["img"]!,
+                                fit: BoxFit.cover,
+                                loadingBuilder: (_, child, progress) {
+                                  if (progress != null) {
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  }
+                                  return child;
+                                },
+                              ),
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 8),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              kCaseStudies[index]["dateTime"]!,
-                              style: const TextStyle(
-                                fontFamily: "Space Grotesk",
-                                fontWeight: FontWeight.w300,
-                                fontSize: 14,
-                              ),
+                          const SizedBox(height: 12),
+                          Text(
+                            kCaseStudies[index]["title"]!,
+                            style: const TextStyle(
+                              fontFamily: "Space Grotesk",
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
                             ),
-                            const SizedBox(width: 8),
-                            const Text(
-                              "—",
-                              style: TextStyle(
-                                fontFamily: "Space Grotesk",
-                                fontWeight: FontWeight.w300,
-                                fontSize: 14,
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                kCaseStudies[index]["dateTime"]!,
+                                style: const TextStyle(
+                                  fontFamily: "Space Grotesk",
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 14,
+                                ),
                               ),
-                            ),
-                            const SizedBox(width: 8),
-                            Text(
-                              kCaseStudies[index]["category"]!,
-                              style: const TextStyle(
-                                fontFamily: "Space Grotesk",
-                                fontWeight: FontWeight.w300,
-                                fontSize: 14,
+                              const SizedBox(width: 8),
+                              const Text(
+                                "—",
+                                style: TextStyle(
+                                  fontFamily: "Space Grotesk",
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 14,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                              const SizedBox(width: 8),
+                              Text(
+                                kCaseStudies[index]["category"]!,
+                                style: const TextStyle(
+                                  fontFamily: "Space Grotesk",
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },

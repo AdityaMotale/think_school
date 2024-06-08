@@ -19,7 +19,7 @@ This is when the US occupied Japan, and empowered the government to revamp its e
 
 You will see that this translates into a billion dollar impact on the economy of the country.
 
-![Image 2](https://adityamotale.github.io/think_school_release/public/images/c_01_0.png)
+![Image 2](https://adityamotale.github.io/think_school_release/public/images/c_01_02.png)
 
 Now the question is, if Japan was in ruins after World War, then how did these people find jobs? This was solved with the Keiretsu model!
 
