@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:think_school/views/concept_details.view.dart';
 
 import '../../data/concepts.data.dart';
 
@@ -83,48 +84,62 @@ class ConceptsPage extends StatelessWidget {
               childAspectRatio: calculateAspectRatio(context),
               children: [
                 for (int i = 0; i < kConcepts.length; i++)
-                  Container(
-                    padding: const EdgeInsets.all(11.5),
-                    decoration: BoxDecoration(
-                      color: hexToColor(kConcepts[i]["color"]!),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => ConceptView(
+                            bgColor: hexToColor(kConcepts[i]["color"]!),
+                            title: kConcepts[i]["title"]!,
+                            icon: kConcepts[i]["icon"]!,
+                            body: kConcepts[i]["body"]!,
                           ),
-                          child: Text(
-                            kConcepts[i]['icon']!,
+                        ),
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(11.5),
+                      decoration: BoxDecoration(
+                        color: hexToColor(kConcepts[i]["color"]!),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
+                            child: Text(
+                              kConcepts[i]['icon']!,
+                              style: const TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          Text(
+                            kConcepts[i]["title"]!,
                             style: const TextStyle(
+                              fontFamily: "Dm Serif Display",
                               fontSize: 16,
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 12),
-                        Text(
-                          kConcepts[i]["title"]!,
-                          style: const TextStyle(
-                            fontFamily: "Dm Serif Display",
-                            fontSize: 16,
+                          const SizedBox(height: 12),
+                          Text(
+                            kConcepts[i]["desc"]!,
+                            style: const TextStyle(
+                              fontFamily: "Space Grotesk",
+                              fontSize: 12,
+                            ),
+                            maxLines:
+                                MediaQuery.of(context).size.width < 400 ? 1 : 2,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                        ),
-                        const SizedBox(height: 12),
-                        Text(
-                          kConcepts[i]["desc"]!,
-                          style: const TextStyle(
-                            fontFamily: "Space Grotesk",
-                            fontSize: 12,
-                          ),
-                          maxLines:
-                              MediaQuery.of(context).size.width < 400 ? 1 : 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
               ],
