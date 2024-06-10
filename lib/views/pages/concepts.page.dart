@@ -62,14 +62,14 @@ class ConceptsPage extends StatelessWidget {
               alignment: Alignment.bottomLeft,
               children: [
                 Container(
-                  width: calculateTextWidth("Explore Case Studies"),
+                  width: calculateTextWidth("Explore Concepts"),
                   height: 6,
                   decoration: const BoxDecoration(
                     color: Color(0xFFF7E277),
                   ),
                 ),
                 Text(
-                  "Explore Case Studies —",
+                  "Explore Concepts —",
                   style: headingTextStyle,
                 ),
               ],
